@@ -64,7 +64,7 @@ class JobDataContainer():
 
 class PipelineDataContainer():
 
-    def __init__(self, template_path: str = 'template.json') -> None:
+    def __init__(self, template_path: str = 'internal_template.json') -> None:
         self.__template_path: str = template_path
         self.__json_template = self.__load_template_json_file(self.__template_path)
 
@@ -76,6 +76,11 @@ class PipelineDataContainer():
 
     def get_json_dict(self) -> dict:
         return deepcopy(self.__json_template)
+
+    def get_outgoing_dict(self) -> dict:
+        outgoing_dict: dict = deepcopy(self.__json_template)
+        outgoing_dict.pop(TIME)
+        return outgoing_dict
 
     def get_json_as_string(self) -> str:
         json_string = json.dumps(self.__json_template)
@@ -132,7 +137,7 @@ class PipelineDataContainer():
             est_start_time + est_finish_time, number_of_decimals)
 
     def get_jobs(self) -> List[JobDataContainer]:
-        job_list = self.__json_template[JOB]
+        job_list = self.__json_template[JOB_LIST_KEY]
         job_list = [JobDataContainer(job) for job in job_list]
         return job_list
 
