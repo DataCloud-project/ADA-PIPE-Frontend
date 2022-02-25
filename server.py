@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 
 # source: https://towardsdatascience.com/a-python-api-for-background-requests-based-on-flask-and-multi-processing-187d0e3049c9
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, request
 from waitress import serve
 from flask_cors import CORS
+
 
 import json
 
 from interface_json import PipelineDataContainer
 
 DEBUG_MODE: bool = True
+HOST_NUMBER: str = '0.0.0.0'
 PORT_NUMBER: int = 5000
 
 pdc = PipelineDataContainer()
@@ -57,15 +59,20 @@ def get_pipeline_names():
     return {'pipelines': [pdc.get_pipeline_name(), pdc2.get_pipeline_name()]}
 
 
+@app.route('/pipelines/<uuid:pipeline_name>', methods=[REST_POST])
+def get_pipeline(pipeline_name):
+    body_pipeline_id = request.json.get('pipeline_name')
+    # body_operator = request.json.get('operator')
 
-
+    pipeline = None
+    
 
 if __name__ == '__main__':
 
     print(f'Port: {PORT_NUMBER}')
     if DEBUG_MODE:
         # debug mode
-        app.run(port=PORT_NUMBER, debug=True)
+        app.run(host=HOST_NUMBER, port=PORT_NUMBER, debug=True)
 
     else:
         # production mode
