@@ -9,7 +9,7 @@ ESTIMATED_START_TIME: str = 'EST'
 ESTIMATED_FINISH_TIME: str = 'EFT'
 TERMINATION_TIME: str = 'TT'
 
-JOB: str = 'job'
+JOB_LIST_KEY: str = 'jobList'
 JOB_ORDER: str = 'order'
 JOB_NAME: str = 'name'
 JOB_RESOURCE: str = 'resource'
@@ -51,7 +51,7 @@ JOB_NETWORK_MODE_HOST: str = 'networkModeHost'
 JOB_PRIVILEGE: str = 'privilege'
 
 job_keys: list = [
-    JOB, JOB_ORDER,
+    JOB_LIST_KEY, JOB_ORDER,
     JOB_NAME,
     JOB_RESOURCE,
     JOB_ARCHITECTURE,
