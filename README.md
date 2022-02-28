@@ -5,4 +5,4 @@
 
 # ADA-PIPE Frontend
 
-GUI for the ADA-PIPE that allows smart and adaptable provisioning of resources for microservices across the Computing Continuum.
+GUI for the ADA-PIPE that allows smart and adaptable provisioning resources for microservices across the Computing Continuum.
