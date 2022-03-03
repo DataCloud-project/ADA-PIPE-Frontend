@@ -1,7 +1,7 @@
 {
-    "pipelineName": "traffic_sign_recognition",
-    "pipelineType": "simulation|production",
-    "stepName": "readMedicValues",
+    "chunkName": "tellucare_pipeline",
+    "pipelineType": "streaming",
+    "stepName": "03-application-logic",
     "terminationCheck": {
         "httpURL": "localhost/api/v1/success"
     },
@@ -9,23 +9,23 @@
         "EST": 1.0,
         "EFT": 3.14
     },
-    "jobList": [
+    "stepsList": [
         {
-            "name": "readMedicValues",
-            "resource": "workder1",
-            "provider": "R-MARKET",
+            "name": "03-application-logic",
+            "resource": "datacloud_worker_1_wp1",
+            "provider": "DataCloud workerpool 1",
             "architecture": "amd64",
             "elasticityControllerMode": "HORIZONTAL",
-            "dockerImage": "sina88/readmedicvalues:1.0",
-            "dockerCredentialsUsing": "true",
+            "dockerImage": "registry.sintef.cloud/tellucare-application-logic:latest",
+            "dockerCredentialsUsing": "false",
             "dockerUsername": "",
             "dockerPassword": "",
             "dockerCustomRegistry": "true",
             "dockerRegistry": "",
             "requirement": {
-                "vCPUs": 4,
-                "ram": 4,
-                "storage": 20
+                "vCPUs": 1,
+                "ram": 1,
+                "storage": 1
             },
             "healthCheck": {
                 "httpURL": "localhost/api/v1/healthCheck",
@@ -43,7 +43,7 @@
                     "value": ""
                 }
             ],
-            "numWorkers": 5,
+            "numWorkers": 1,
             "exposedInterfaces": [
                 {
                     "name": "sparkMasterRest",
