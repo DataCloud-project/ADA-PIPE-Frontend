@@ -1,5 +1,5 @@
 from typing import List, Dict
-from interface_json import PipelineDataContainer, JobDataContainer
+from interface_json import PipelineDataContainer, StepsDataContainer
 from copy import copy, deepcopy
 
 

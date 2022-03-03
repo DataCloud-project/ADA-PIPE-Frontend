@@ -1,7 +1,7 @@
 {
-    "chunkName": "tellucare_pipeline",
+    "chunkName": "telluUseCase",
+    "pipelineName": "tellucare_pipeline",
     "pipelineType": "streaming",
-    "stepName": "03-application-logic",
     "terminationCheck": {
         "httpURL": "localhost/api/v1/success"
     },

@@ -149,8 +149,8 @@ class PipelineDataContainer():
     
 
 
-pt = PipelineDataContainer()
-print(pt.get_steps_as_json())
+# pt = PipelineDataContainer()
+# print(pt.get_steps_as_json())
 
 # job = pt.get_steps().pop()
 # print(job.get_steps_health_check())
