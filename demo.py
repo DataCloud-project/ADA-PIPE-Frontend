@@ -33,13 +33,13 @@ def get_time():
 
 @app.route('/job/requirement')
 def get_req():
-    job_requirement = json.dumps(pdc.get_jobs().pop().get_requirements())
+    job_requirement = json.dumps(pdc.get_steps().pop().get_requirements())
     return Response(job_requirement, mimetype='application/json')
 
 
 @app.route('/job/resource')
 def get_res():
-    job_resource = json.dumps(pdc.get_jobs().pop().get_resource())
+    job_resource = json.dumps(pdc.get_steps().pop().get_resource())
     return Response(job_resource, mimetype='application/json')
 
 
