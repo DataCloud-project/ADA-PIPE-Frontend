@@ -5,7 +5,7 @@ from flask import Flask, abort, jsonify, render_template, Response, request
 from waitress import serve
 from flask_cors import CORS
 
-
+import socket
 import json
 
 from interface_json import PipelineDataContainer
@@ -87,5 +87,7 @@ if __name__ == '__main__':
 
     else:
         # production mode
-        print(f'Port: {PORT_NUMBER}')
-        serve(app, port=PORT_NUMBER)
+        host_name = socket.gethostname()
+        IP_address = socket.gethostbyname(host_name)
+        print(f'Running on http://{IP_address}/{PORT_NUMBER}/ (Press CTRL+C to quit)')
+        serve(app, host=HOST_NUMBER, port=PORT_NUMBER)
