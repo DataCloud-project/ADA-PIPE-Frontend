@@ -4,14 +4,16 @@
 from flask import Flask, abort, jsonify, render_template, Response, request
 from waitress import serve
 from flask_cors import CORS
+from flask_restful import Resource, Api
 
 import socket
 import json
 
 from interface_json import PipelineDataContainer
 from pipeline_state import PipelineState
+from pipeline_api import PipelineREST
 
-DEBUG_MODE: bool = True
+DEBUG_MODE: bool = False
 HOST_NUMBER: str = '0.0.0.0'
 PORT_NUMBER: int = 5000
 
@@ -23,6 +25,7 @@ REST_POST: str = 'POST'
 # Create a new Flask application
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+api = Api(app)
 
 
 @app.route('/', methods=[REST_GET])
@@ -44,15 +47,8 @@ def get_homepage():
 #     job_requirement = json.dumps(pdc.get_jobs().pop().get_requirements())
 #     return Response(job_requirement, mimetype='application/json')
 
+api.add_resource(PipelineREST, '/pipelines')
 
-@app.route('/pipelines', methods=[REST_GET])
-def get_pipelines():
-
-    # pipelines = {'pipelines': [
-    #     pdc.get_outgoing_dict(), pdc2.get_outgoing_dict()]}
-    pipelines = {'pipelines': [pipeline.get_outgoing_dict() for pipeline in pipeline_state.get_pipelines_()]}
-
-    return Response(json.dumps(pipelines), mimetype='application/json')
 
 # TODO
 # @app.route('/pipeline_names', methods=[REST_GET])
@@ -63,20 +59,6 @@ def get_pipelines():
     # return {
     #     'pipelines': [pipeline.get_pipeline_name() for pipeline in pipeline_state.get_pipelines_()]
     #     }
-
-
-@app.route('/pipelines', methods=[REST_POST])
-def add_pipeline():
-  
-    if not request.json or not 'pipeline_name' in request.json:
-        abort(400)
-
-    name = request.json['pipeline_name']
-    pdc = PipelineDataContainer()
-    pdc.set_pipeline_name(name)
-    pipeline_state.add_pipeline_container(pdc)
-
-    return jsonify(pdc.get_outgoing_dict()), 201
 
 
 if __name__ == '__main__':
@@ -90,4 +72,5 @@ if __name__ == '__main__':
         host_name = socket.gethostname()
         IP_address = socket.gethostbyname(host_name)
         print(f'Running on http://{IP_address}:{PORT_NUMBER}/ (Press CTRL+C to quit)')
-        serve(app, host=HOST_NUMBER, port=PORT_NUMBER)
+        serve(app, port=PORT_NUMBER)
+        # serve(app, host=HOST_NUMBER, port=PORT_NUMBER)
