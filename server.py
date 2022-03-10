@@ -17,7 +17,7 @@ DEBUG_MODE: bool = False
 HOST_NUMBER: str = '0.0.0.0'
 PORT_NUMBER: int = 5000
 
-pipeline_state: PipelineState = PipelineState(add_dummy_data=True)
+# pipeline_state: PipelineState = PipelineState(add_dummy_data=True)
 
 REST_GET: str = 'GET'
 REST_POST: str = 'POST'
