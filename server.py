@@ -1,23 +1,19 @@
 #!/usr/bin/env python3
 
 # source: https://towardsdatascience.com/a-python-api-for-background-requests-based-on-flask-and-multi-processing-187d0e3049c9
-from flask import Flask, abort, jsonify, render_template, Response, request
+from flask import Flask, abort, jsonify, render_template, request
 from waitress import serve
 from flask_cors import CORS
-from flask_restful import Resource, Api
+from flask_restful import Api
+from flask import send_file
 
 import socket
-import json
 
-from interface_json import PipelineDataContainer
-from pipeline_state import PipelineState
 from pipeline_api import PipelineREST
 
 DEBUG_MODE: bool = False
 HOST_NUMBER: str = '0.0.0.0'
 PORT_NUMBER: int = 5000
-
-# pipeline_state: PipelineState = PipelineState(add_dummy_data=True)
 
 REST_GET: str = 'GET'
 REST_POST: str = 'POST'
@@ -59,6 +55,11 @@ api.add_resource(PipelineREST, '/pipelines')
     # return {
     #     'pipelines': [pipeline.get_pipeline_name() for pipeline in pipeline_state.get_pipelines_()]
     #     }
+
+# small easter egg
+@app.route('/teapot/')
+def teapot():
+    return send_file('images/Htcpcp_teapot.jpg', mimetype='image/gif')
 
 
 if __name__ == '__main__':
