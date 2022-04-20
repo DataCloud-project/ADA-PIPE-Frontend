@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # source: https://towardsdatascience.com/a-python-api-for-background-requests-based-on-flask-and-multi-processing-187d0e3049c9
-from flask import Flask, abort, jsonify, render_template, request
+from flask import Flask, render_template
 from waitress import serve
 from flask_cors import CORS
 from flask_restful import Api
