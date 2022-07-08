@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
 
 # source: https://towardsdatascience.com/a-python-api-for-background-requests-based-on-flask-and-multi-processing-187d0e3049c9
-from flask import Flask, render_template
+from flask import Flask, abort, jsonify, render_template, Response, request
 from waitress import serve
 from flask_cors import CORS
 from flask_restful import Api
 from flask import send_file
 
-import socket
 
-from pipeline_api import PipelineREST
+import json
 
-DEBUG_MODE: bool = False
+from interface_json import PipelineDataContainer
+from pipeline_state import PipelineState
+
+DEBUG_MODE: bool = True
 HOST_NUMBER: str = '0.0.0.0'
 PORT_NUMBER: int = 5000
+
+pipeline_state: PipelineState = PipelineState(add_dummy_data=True)
 
 REST_GET: str = 'GET'
 REST_POST: str = 'POST'
@@ -60,6 +64,20 @@ api.add_resource(PipelineREST, '/pipelines')
 @app.route('/teapot/')
 def teapot():
     return send_file('images/Htcpcp_teapot.jpg', mimetype='image/gif')
+
+
+@app.route('/pipelines', methods=[REST_POST])
+def add_pipeline():
+  
+    if not request.json or not 'pipeline_name' in request.json:
+        abort(400)
+
+    name = request.json['pipeline_name']
+    pdc = PipelineDataContainer()
+    pdc.set_pipeline_name(name)
+    pipeline_state.add_pipeline_container(pdc)
+
+    return jsonify(pdc.get_outgoing_dict()), 201
 
 
 if __name__ == '__main__':
