@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 
 # source: https://towardsdatascience.com/a-python-api-for-background-requests-based-on-flask-and-multi-processing-187d0e3049c9
-from flask import Flask, abort, jsonify, render_template, Response, request
+from flask import Flask, abort, jsonify, render_template, request
 from waitress import serve
 from flask_cors import CORS
 from flask_restful import Api
 from flask import send_file
 
-
-import json
-
 from interface_json import PipelineDataContainer
 from pipeline_state import PipelineState
+from pipeline_api import PipelineREST
 
 DEBUG_MODE: bool = True
 HOST_NUMBER: str = '0.0.0.0'
